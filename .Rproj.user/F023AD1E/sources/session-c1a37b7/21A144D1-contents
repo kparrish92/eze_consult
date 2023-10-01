@@ -37,6 +37,7 @@ For reaction time, a generalized mixed effects model was run in which log-transf
 The independent variables were group (2 levels: L2 speaker or Spanish native speaker), corsi task z-score (continuous), verbal working memory task z-score (continuous), spatial verb (2 levels: spatial or non-spatial).
 In addition to these fixed effects, 2 two-way interactions and 2 three-way interactions were assessed.
 The two-way interactions were between group and the corsi z-score and group and the verbal working memory z-score, while the three-way interactions were group, corsi z-score and spatial verb, and group, verbal working memory score and spatial verb. 
+A random intercept for participant was also included to take into account the nested structure of the data.
 
 # Results 
 
