@@ -1,0 +1,65 @@
+# Source libs -----------------------------------------------------------
+source(here::here("scripts", "00_libs.R"))
+
+# load data  ------------------------------------------------------------
+source(here::here("scripts", "03_load_data.R"))
+
+
+
+get_priors(mod_b_1)
+
+### LOG MOD
+mod_b_1 = brm(as.numeric(key_resp_6.corr) ~ group*spatial_verb*corsi_z*vmn_z + (group*spatial_verb*corsi_z*vmn_z | participant), 
+              family = bernoulli(link = "logit"), 
+              data = long_df, 
+              file = here("data", "models", "acc_mod.rds"))
+
+ce_mod = conditional_effects(mod_b_1)
+
+summary(mod_b_1)
+report::report_priors(mod_b_1)
+
+
+## RT mod 
+
+rt = brm(log_rt ~ group*spatial_verb*corsi_z*vmn_z + (group*spatial_verb*corsi_z*vmn_z | participant), 
+              data = long_df, 
+              file = here("data", "models", "rt_model.mds"))
+
+
+
+conditional_effects(rt)
+
+hist(as.numeric(long_df_comb$key_resp_6.rt))
+
+hist(long_df_comb$log_rt)
+
+
+
+long_df %>% 
+  ggplot(aes(x = log_rt, y = corsi_z)) + geom_point()
+
+
+
+long_df %>% 
+  ggplot(aes(x = log_rt, y = spatial_verb, fill = group)) + geom_boxplot()
+
+
+long_df %>% 
+  ggplot(aes(x = log_rt, y = corsi_z, color = group)) + geom_jitter(alpha = .1) + 
+  facet_wrap(~spatial_verb) + geom_smooth(method = "lm")
+
+
+long_df %>% 
+  ggplot(aes(x = log_rt, y = vmn_z, color = spatial_verb)) + geom_jitter(alpha = .1) + 
+  geom_smooth(method = "lm") + facet_wrap(~participant) + xlim(-2,2) + ylim(-1,1)
+
+
+long_df %>% 
+  ggplot(aes(x = log_rt, y = corsi_z, color = spatial_verb)) + geom_jitter(alpha = .1) + 
+  geom_smooth(method = "lm") + facet_wrap(~participant) 
+
+long_df %>% 
+  group_by(group, spatial_verb) %>% 
+  summarize(mean_rt = mean(log_rt))
+

@@ -1,0 +1,13 @@
+
+
+mod1 = lmer(mean_rt ~ 1 + (1 | participant), data = vs_df %>% 
+            filter(!participant %in% idf))
+mod2 = lmer(mean_rt ~ group + (1 | participant), data = vs_df %>% 
+            filter(!participant %in% idf))
+mod3 = lmer(mean_rt ~ group + vmn_z + (1 | participant), data = vs_df %>% 
+                filter(!participant %in% idf))
+
+mod4 = lmer(mean_rt ~ group + vmn_z + group:vmn_z + (1 | participant), data = vs_df %>% 
+              filter(!participant %in% idf))
+
+anova(mod1,mod2,mod3,mod4)

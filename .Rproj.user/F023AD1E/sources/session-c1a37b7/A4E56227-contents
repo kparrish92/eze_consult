@@ -1,0 +1,52 @@
+---
+title: "Lexical Decision Task Analysis"
+format: html
+editor: visual
+---
+
+```{r}
+# Source libs -----------------------------------------------------------
+source(here::here("scripts", "00_libs.R"))
+
+# load data  ------------------------------------------------------------
+source(here::here("scripts", "03_load_data.R"))
+
+```
+
+# Overall take-away messages
+
+It does not appear that L2 learners show evidence of an effect for either type of working memory in their lexical decision times for both verb types, while monolinguals do. However, higher accuracy was associated with higher scores in both working memory tasks by the L2 group. 
+
+## Accuracy
+
+Monolinguals were more accurate in the lexical decision task than L2 learners.
+
+Higher scores on the corsi task and the verbal working memory tasks both predicted higher accuracy in the lexical decision task.
+
+## RTs
+
+In monolinguals, higher scores in the corsi and verbal working memory tasks were associated with lower reaction times in both visiospatial and non-visiospatial verbs.
+
+In L2 learners, higher scores in the corsi and verbal working memory tasks were associated with higher reaction times in both visiospatial and non-visiospatial verbs.
+
+# Descriptive analysis of overall Accuracy
+
+The mean accuracy of the monolingual group was `r rep$mean_c[4]` (sd = `r rep$sd_c[4]`) for spatial words and `r rep$mean_c[3]` (sd = `r rep$sd_c[3]`) for non-spatial words. The L2 groups was less accurate in both types of verbs (`r rep$mean_c[2]` (sd = `r rep$sd_c[2]`) for spatial and `r rep$mean_c[1]` (sd = `r rep$sd_c[1]`) for non-spatial).
+
+We ran a model to briefly analyze accuracy as a function of our predictors. A bayesian logistic regression in which response (binary; 1 for correct and 0 for incorrect) was analyzed as a function of group (L2 or native), verb type (spacial or not) and z-scores for both the corsi task and verbal working memory task. In addition to lone fixed effects, all higher order interactions were also included in the model. The model also included the maximal random effects structure. Priors were the default in brms in R (a Student's T distribution with 3 degrees of freedon).
+
+# Accuracy model
+
+The probability of an accurate response by the L2 group was `r round(group_verb$estimate__[2], digits = 2)` [95% HDI = `r round(group_verb$lower__[2], digits = 2)` - `r round(group_verb$upper__[2], digits = 2)`] for spatial verbs, and `r round(group_verb$estimate__[1], digits = 2)` [95% HDI = `r round(group_verb$lower__[1], digits = 2)` - `r round(group_verb$upper__[1], digits = 2)`] for non-spatial verbs.
+
+The probability of an accurate response by the monolingual group was `r round(group_verb$estimate__[4], digits = 2)` [95% HDI = `r round(group_verb$lower__[4], digits = 2)` - `r round(group_verb$upper__[4], digits = 2)`] for spatial verbs, and `r round(group_verb$estimate__[3], digits = 2)` [95% HDI = `r round(group_verb$lower__[3], digits = 2)` - `r round(group_verb$upper__[3], digits = 2)`] for non-spatial verbs.
+
+Corsi scores \[SLOPE, 95% HDI \] predicted accuracy for L2 speakers in spacial verbs.
+
+Corsi scores \[SLOPE, 95% HDI \] predicted accuracy for L2 speakers in non-spacial verbs.
+
+Corsi scores \[SLOPE, 95% HDI \]predicted accuracy for native speakers in spacial verbs Corsi scores \[SLOPE, 95% HDI \] predicted accuracy for native speakers in non-spacial verbs
+
+Verbal working memory predicted accuracy for L2 speakrs in non-spacial verbs
+
+# RT model

@@ -1,0 +1,139 @@
+---
+title: "Lexical Decision Task Analysis"
+format: html
+editor: visual
+---
+
+```{r, include=FALSE}
+# Source libs -----------------------------------------------------------
+source(here::here("scripts", "00_libs.R"))
+
+# load data  ------------------------------------------------------------
+source(here::here("scripts", "03_load_data.R"))
+
+```
+
+# Take away messages:
+
+Overall, monolinguals were more accurate in the lexical decision task than L2 learners. 
+For reaction times, they were also faster overall (there was an effect). 
+Visiospatial working memory was associated with lower rts for monolinguals, but higher rts for L2 learners (there was an effect). 
+Oppositely, verbal working memory was associated with lower rts for L2 learners, but higher rts for monolinguals (there was not an effect here).
+Adding spatial verbs to the equation did **not** explain any additional variance. 
+
+# Tasks 
+
+All participants completed a lexical decision task with 24 critical items (12 spatial and 12 non-spatial verbs). They also completed two tasks measuring their working memory: a corsi task and a verbal working memory task. 
+
+# Participants 
+
+The following analysis shows the results of the lexical decision task of two groups, L2 speakers of Spanish (n = `r part_nums$n[1]`) and native speakers of Spanish (n = `r part_nums$n[2]`).
+
+# Statistical Analysis 
+
+Results are reported for both accuracy in the lexical decision task and reaction time.
+For accuracy, I have just included the mean accuracy (with sd) from each group and in each condition. 
+For reaction time, a generalized mixed effects model was run in which log-transformed reaction time was the dependent variable.
+The independent variables were group (2 levels: L2 speaker or Spanish native speaker), corsi task z-score (continuous), verbal working memory task z-score (continuous), spatial verb (2 levels: spatial or non-spatial).
+In addition to these fixed effects, 2 two-way interactions and 2 three-way interactions were assessed.
+The two-way interactions were between group and the corsi z-score and group and the verbal working memory z-score, while the three-way interactions were group, corsi z-score and spatial verb, and group, verbal working memory score and spatial verb. 
+
+# Results 
+
+### Accuracy 
+
+Takeaway: Monolinguals were more accurate than L2 learners in both verb types. Please see the table below.
+
+```{r, echo=FALSE}
+pct_df %>% 
+  group_by(group, spatial_verb) %>% 
+  summarize(Correct = round(mean(pct_correct),digits = 2),
+            SD = round(sd(pct_correct),digits = 2),
+            ) %>% 
+  knitr::kable()
+
+```
+
+### Reaction Times Summary
+
+The results of nested model comparisons revealed a main effect of *group* (χ^2^(`r report_models$Df[2]`) = `r round(report_models$Chisq[2], digits = 2)`; p < .05), meaning that there was a difference between how fast both groups reacted in their lexical decisions. Specifically, the monolinguals were about `r pct_faster*100` percent faster to arrive to a decision than monolinguals (`r round(rep_mod_fe[["groupmonolinguals"]], digits = 2)`, [95% CI = `r round(rep_mod_ci[4,1], digits = 2)` - `r round(rep_mod_ci[4,2], digits = 2)`]).
+Additionally, there was an interaction between *group* and the *corsi z-score* (χ^2^(`r report_models$Df[6]`) = `r round(report_models$Chisq[6], digits = 2)`; p < .05).
+
+There were no other main effects or interactions:
+
+Corsi z-score - χ^2^(`r report_models$Df[3]`) = `r round(report_models$Chisq[3], digits = 2)`; p = `r round(report_models$p_value[3], digits = 2)`)
+
+Verbal working memory z-score -  χ^2^(`r report_models$Df[4]`) = `r round(report_models$Chisq[4], digits = 2)`; p = `r round(report_models$p_value[4], digits = 2)`)
+
+Spatial verb -  χ^2^(`r report_models$Df[5]`) = `r round(report_models$Chisq[5], digits = 2)`; p = `r round(report_models$p_value[5], digits = 2)`)
+
+Verbal working memory z-score:group -  χ^2^(`r report_models$Df[7]`) = `r round(report_models$Chisq[7], digits = 2)`; p = `r round(report_models$p_value[7], digits = 2)`)
+
+Verbal working memory z-score:group -  χ^2^(`r report_models$Df[8]`) = `r round(report_models$Chisq[8], digits = 2)`; p = `r round(report_models$p_value[8], digits = 2)`)
+
+Corsi z-score:group:Spatial verb -  χ^2^(`r report_models$Df[9]`) = `r round(report_models$Chisq[9], digits = 2)`; p = `r round(report_models$p_value[9], digits = 2)`)
+
+### Plots
+
+These plots visualize each interaction, with reporting details from the summary repeated beneath them.
+
+```{r, echo = FALSE, warning = FALSE}
+#| label: fig-corsirt
+#| fig-cap: "Log-transformed Reaction time and visiospatial working memory (z-score) for all verbs"
+
+cond_df %>% 
+  ggplot(aes(x = corsi_z, y = mean_rt, color = group)) + 
+  geom_point() + geom_smooth(method = "glm") + xlab("Visiospatial Working Memory") + ylab("Mean Reaction Time") + theme_minimal() +
+  theme(legend.position="bottom")
+
+```
+
+@fig-corsirt shows the log-transformed reaction times with visiospatial working memory scores. There was an interaction between *group* and the *corsi z-score* (χ^2^(`r report_models$Df[6]`) = `r round(report_models$Chisq[6], digits = 2)`; p < .05).
+This interaction suggests that the impact of visiospatial working memory varied as a function of group. 
+Specifically, the L2 learners had a positive slope, suggesting that inscreased visiospatial working memory was associated with longer reaction times.
+The opposite was true for the monolinguals.
+@fig-vmn shows the log-transformed reaction times with visiospatial working memory scores, and reveals an opposite trend.
+Although there was not an interaction between *verbal working memoery* and *group* χ^2^(`r report_models$Df[7]`) = `r round(report_models$Chisq[7], digits = 2)`; p = `r round(report_models$p_value[7], digits = 2)`), the slopes of the lines suggest that faster RTs are associated with higher verbal working memory for L2 learners, and slower RTs are associated with higher verbal working memory in monolinguals.
+
+
+```{r, echo = FALSE, warning = FALSE}
+#| label: fig-vmn
+#| fig-cap: "Log-transformed Reaction time and verbal working memory (z-score) for all verbs"
+
+cond_df %>% 
+  ggplot(aes(x = vmn_z, y = mean_rt, color = group)) + 
+  geom_point() + geom_smooth(method = "glm") + xlab("Verbal Working Memory") + ylab("Mean Reaction Time") + theme_minimal() +
+  theme(legend.position="bottom")
+
+```
+
+```{r, echo = FALSE, warning = FALSE}
+#| label: fig-vss
+#| fig-cap: "Log-transformed Reaction time and visiospatial working memory (z-score) for visiospatial and non-visiospatial verbs"
+
+cond_df %>% 
+  #filter(spatial_verb == "yes") %>% 
+  ggplot(aes(x = corsi_z, y = mean_rt, color = group)) + 
+  geom_point() + geom_smooth(method = "glm") + xlab("Visiospatial Working Memory") + ylab("Mean Reaction Time") + theme_minimal() +
+  theme(legend.position="bottom") + facet_wrap(~spatial_verb)
+
+```
+
+These figures show the 3-way interactions, and show that there was not evidence of any effect for spatial verbs. The trends observed in the previous two plots appear to hold true.
+@fig-vss shows reaction time for visiospatial verbs and non-visiospacial verbs for both groups and with visiospatial working memory. There was not a 3-way interaction between *corsi z-score*, *group* and *spatial verb* (χ^2^(`r report_models$Df[9]`) = `r round(report_models$Chisq[9], digits = 2)`; p = `r round(report_models$p_value[9], digits = 2)`).
+@fig-vss-2 shows the same information but with verbal working memeory. 
+Again, there was not a 3-way interaction between *verbal working memeory*, *group*, and *spatial verb*; χ^2^(`r report_models$Df[8]`) = `r round(report_models$Chisq[8], digits = 2)`; p = `r round(report_models$p_value[8], digits = 2)`).
+
+
+```{r, echo = FALSE, warning = FALSE}
+#| label: fig-vss-2
+#| fig-cap: "Log-transformed Reaction time and verbal working memory (z-score) for visiospatial and non-visiospatial verbs"
+
+cond_df %>% 
+  #filter(spatial_verb == "yes") %>% 
+  ggplot(aes(x = vmn_z, y = mean_rt, color = group)) + 
+  geom_point() + geom_smooth(method = "glm") + xlab("Verbal Working Memory") + ylab("Mean Reaction Time") + theme_minimal() +
+  theme(legend.position="bottom") + facet_wrap(~spatial_verb)
+
+```
+

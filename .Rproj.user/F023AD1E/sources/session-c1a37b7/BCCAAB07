@@ -1,0 +1,28 @@
+{
+    "id": "BCCAAB07",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1696079572840.0,
+    "source_on_save": false,
+    "relative_order": 9,
+    "properties": {
+        "id": "1c03b25206284773bb2fecc4a3dad7ed",
+        "name": "df",
+        "title": "df",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 5561724128,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1696079572840,
+    "read_only": false,
+    "read_only_alternatives": []
+}

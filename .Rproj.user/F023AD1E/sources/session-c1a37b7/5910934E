@@ -1,0 +1,28 @@
+{
+    "id": "5910934E",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1695992977642.0,
+    "source_on_save": false,
+    "relative_order": 7,
+    "properties": {
+        "id": "b69b5919371e4590b47567fe595ebf74",
+        "name": "ce_mod",
+        "title": "ce_mod",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 0,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1695992977642,
+    "read_only": false,
+    "read_only_alternatives": []
+}

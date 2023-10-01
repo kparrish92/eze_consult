@@ -1,0 +1,28 @@
+{
+    "id": "13E17754",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1696154614308.0,
+    "source_on_save": false,
+    "relative_order": 11,
+    "properties": {
+        "id": "e9bf00a5aa824b6686e672cecd2b2429",
+        "name": "rep_mod_fe",
+        "title": "rep_mod_fe",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 5561724128,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1696154614308,
+    "read_only": false,
+    "read_only_alternatives": []
+}

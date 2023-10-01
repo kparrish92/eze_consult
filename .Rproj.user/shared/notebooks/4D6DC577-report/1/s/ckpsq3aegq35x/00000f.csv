@@ -1,0 +1,6 @@
+"0","pct_df %>% "
+"0","  group_by(group, spatial_verb) %>% "
+"0","  summarize(mean_c = mean(pct_correct), sd_c = sd(pct_correct)) %>% "
+"0","  ggplot(aes(x = mean_c, y = group, xmin = mean_c - sd_c, xmax = mean_c + sd_c)) + "
+"0","  geom_pointrange(position = position_dodge(width = 0.9), shape = 21) + theme_minimal() "
+"2","`summarise()` has grouped output by 'group'. You can override using the `.groups` argument."
