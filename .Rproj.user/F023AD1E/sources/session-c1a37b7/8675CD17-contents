@@ -1,0 +1,58 @@
+
+source(here::here("scripts", "00_libs.R"))
+source(here("scripts", "01_helpers.R"))
+
+
+## create reference dataframe to loop through
+
+
+
+sizes = c(10,20,30,40,50,60,70,80)
+segments = c("p", "t", "k", "b", "d", "g")
+mean_population = c(89,98,99,13,21,28)
+sd_population = c(27,28,24,5,7,10)
+
+ref_df = data.frame(sample_sizes = rep(sizes, each = 60),
+                    segment = rep(segments, each = 10),
+                    mean = rep(mean_population, each = 10),
+                    sd = rep(sd_population, each = 10))
+
+
+
+
+sim_data = function(ref_df)
+
+{
+# or pre-allocate for slightly more efficiency
+datalist = vector("list", length = nrow(ref_df))
+
+for (iteration in 1:nrow(ref_df))
+
+{
+df = sim_stim(ref_df$sample_sizes[iteration],ref_df$mean[iteration],ref_df$sd[iteration], .4)
+df$iteration <- iteration  # maybe you want to keep track of which iteration produced it?
+df$segment <- ref_df$segment[iteration]
+datalist[[iteration]] <- df # add it to your list
+}
+
+big_data = do.call(rbind, datalist)
+return(big_data)
+}
+
+
+datalist_final = vector("list", length = 10)
+
+for (iteration in 1:10)
+{
+cont = sim_data(ref_df)
+cont$rep <- iteration  # maybe you want to keep track of which iteration produced it?
+datalist_final[[iteration]] <- cont # add it to your list
+}
+
+final_data = do.call(rbind, datalist_final)
+  # or big_data <- dplyr::bind_rows(datalist)
+# or big_data <- data.table::rbindlist(datalist)
+
+final_data %>%
+  write.csv(here("data", "full_data.csv"))
+

@@ -1,0 +1,8 @@
+"0","#| label: fig-vmn"
+"0","#| fig-cap: ""Log-transformed Reaction time and verbal working memory (z-score) for all verbs"""
+"0",""
+"0","cond_df %>% "
+"0","  ggplot(aes(x = vmn_z, y = mean_rt, color = group)) + "
+"0","  geom_point() + geom_smooth(method = ""glm"") + xlab(""Verbal Working Memory"") + ylab(""Mean Reaction Time"") + theme_minimal() +"
+"0","  theme(legend.position=""bottom"")"
+"0",""

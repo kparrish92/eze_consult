@@ -113,7 +113,9 @@ cond_df %>%
 #| fig-cap: "Log-transformed Reaction time and visiospatial working memory (z-score) for visiospatial and non-visiospatial verbs"
 
 cond_df %>% 
-  #filter(spatial_verb == "yes") %>% 
+  mutate(spatial_verb = case_when(
+    spatial_verb == "yes" ~ "Spatial Verbs",
+    spatial_verb == "no" ~ "Nonspatial Verbs")) %>% 
   ggplot(aes(x = corsi_z, y = mean_rt, color = group)) + 
   geom_point() + geom_smooth(method = "glm") + xlab("Visiospatial Working Memory") + ylab("Mean Reaction Time") + theme_minimal() +
   theme(legend.position="bottom") + facet_wrap(~spatial_verb)
@@ -131,10 +133,42 @@ Again, there was not a 3-way interaction between *verbal working memeory*, *grou
 #| fig-cap: "Log-transformed Reaction time and verbal working memory (z-score) for visiospatial and non-visiospatial verbs"
 
 cond_df %>% 
-  #filter(spatial_verb == "yes") %>% 
+    mutate(spatial_verb = case_when(
+    spatial_verb == "yes" ~ "Spatial Verbs",
+    spatial_verb == "no" ~ "Nonspatial Verbs")) %>% 
   ggplot(aes(x = vmn_z, y = mean_rt, color = group)) + 
   geom_point() + geom_smooth(method = "glm") + xlab("Verbal Working Memory") + ylab("Mean Reaction Time") + theme_minimal() +
   theme(legend.position="bottom") + facet_wrap(~spatial_verb)
 
 ```
+
+# Correlations 
+
+@fig-cor shows the result of a Pearson's Rank Correlation between visiospatial and verbal working memory (alpha = .05) for the L2 speakers. The results suggest that there is no correlation between visiospatial and verbal working memory (R = -0.13, p = .43).
+@fig-cor-n shows the same information for the monolingual group, who also show no evidence of a correlation between the two working memory (R = -0.13, p = .43).
+
+```{r, echo = FALSE, warning = FALSE}
+#| label: fig-cor-n
+#| fig-cap: "A Pearson's Rank correlation between Visiospatial and Verbal Working Memory for the L2 Spanish group"
+
+library("ggpubr")
+ggscatter(cond_df %>% filter(group == "L2 learners"), x = "corsi_z", y = "vmn_z", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "pearson",
+          xlab = "Visiospatial Working Memory", ylab = "Verbal Working Memory")
+```
+
+```{r, echo = FALSE, warning = FALSE}
+#| label: fig-cor
+#| fig-cap: "A Pearson's Rank correlation between Visiospatial and Verbal Working Memory for the monolingual Spanish group"
+
+library("ggpubr")
+ggscatter(cond_df %>% filter(group == "monolinguals"), x = "corsi_z", y = "vmn_z", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "pearson",
+          xlab = "Visiospatial Working Memory", ylab = "Verbal Working Memory")
+```
+
+
+
 

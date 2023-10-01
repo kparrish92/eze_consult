@@ -1,0 +1,8 @@
+"0","#| label: fig-cor"
+"0","#| fig-cap: ""A Pearson's Rank correlation between Visiospatial and Verbal Working Memory for the L2 Spanish group"""
+"0",""
+"0","library(""ggpubr"")"
+"0","ggscatter(cond_df %>% filter(group == ""monolinguals""), x = ""corsi_z"", y = ""vmn_z"", "
+"0","          add = ""reg.line"", conf.int = TRUE, "
+"0","          cor.coef = TRUE, cor.method = ""pearson"","
+"0","          xlab = ""Visiospatial Working Memory"", ylab = ""Verbal Working Memory"")"

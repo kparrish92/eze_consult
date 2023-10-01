@@ -41,6 +41,9 @@ wm_df = long_df %>%
   select(participant, vmn_z, corsi_z) %>% 
   distinct()
 
+wm_df_s = long_df %>% 
+  select(participant, vmn_score, final_corsi_span) %>% 
+  distinct()
 
 wm_y_df = left_join(means_y, wm_df, by = "participant")
 

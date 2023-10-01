@@ -1,0 +1,32 @@
+
+### How many sig t-tests and sig tosts?
+
+source(here::here("scripts", "00_libs.R"))
+source(here("scripts", "01_helpers.R"))
+source(here("scripts", "03_load_data.R"))
+
+total_false_p = nrow(full_df %>% ## sig t-test and sig tost
+       filter(sig_tost == 1 & sig_ttest == 1))/30000
+
+total_sig_t = nrow(full_df %>%
+       filter(sig_ttest == 1))/30000
+
+
+## How many non-sig for either?
+total_non_sig_both = nrow(full_df %>%
+       filter(sig_tost == 0 & sig_ttest == 0))/30000
+
+## How many sig t-test but not tost?
+
+sig_t_non_tost = nrow(full_df %>%
+       filter(sig_tost == 0 & sig_ttest == 1))
+
+
+non_t_sig_tost = nrow(full_df %>%
+                        filter(sig_tost == 1 & sig_ttest == 0))
+
+
+full_df %>%
+  group_by(segment, n_actual, participant) %>%
+  filter(participant == 1) %>%
+  summarize(n_sig = sum(sig_tost))
